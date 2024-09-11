@@ -10,48 +10,59 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         header {
             background-color: #35424a;
             color: white;
             text-align: center;
-            padding: 20px 0;
+            padding: 20px 10px;
         }
 
         header h1 {
             margin: 0;
-            font-size: 2rem;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            font-size: 1rem;
         }
 
         .container {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 80vh;
-            flex-direction: column;
+            min-height: 80vh;
+            padding: 20px;
         }
 
         .input-container {
             margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
         }
 
         .input-container input {
-            padding: 10px;
-            width: 300px;
-            font-size: 1.1rem;
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
             border: 2px solid #333;
             border-radius: 5px;
+            box-sizing: border-box;
         }
 
         .input-container button {
-            padding: 10px 20px;
-            font-size: 1.1rem;
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
             background-color: #35424a;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         .input-container button:hover {
@@ -60,21 +71,20 @@
 
         .result-container {
             margin-top: 20px;
-            width: 90%;
+            width: 100%;
             max-width: 600px;
-            text-align: center;
         }
 
         .result-container table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
 
         .result-container th, .result-container td {
             border: 1px solid #333;
             padding: 10px;
             text-align: center;
+            font-size: 0.9rem;
         }
 
         .result-container th {
@@ -84,8 +94,25 @@
 
         .error {
             color: red;
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-top: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .input-container input, 
+            .input-container button {
+                font-size: 0.9rem;
+            }
+            
+            .result-container th, 
+            .result-container td {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -137,7 +164,7 @@
 
                 if (studentData) {
                     // Display attendance percentage
-                    let html = `
+                    let html = ` 
                         <table>
                             <tr><th>Roll Number</th><th>Attendance Percentage</th></tr>
                             <tr><td>${studentData[0]}</td><td>${studentData[1]}%</td></tr>
