@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Science 2nd Year Portal - KHIT</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         /* Basic Reset */
         * {
@@ -35,7 +34,7 @@
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
         }
 
         header p {
@@ -60,10 +59,11 @@
             justify-content: space-around;
             width: 100%;
             max-width: 600px;
+            padding: 0;
         }
 
         nav ul li {
-            margin: 0 15px;
+            margin: 0 10px;
         }
 
         nav ul li a {
@@ -78,36 +78,37 @@
             border-radius: 5px;
         }
 
-        /* Full-Screen Section Styles with Different Background Colors */
-        section {
+        /* Sections Container */
+        .sections-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh; /* Full viewport height */
-            padding: 20px;
-            text-align: center;
-            animation: fadeIn 2s ease-in-out;
+            margin: 20px;
         }
 
-        section:nth-child(odd) {
-            background-color: #e6f7ff; /* Light Blue */
+        /* Section Styles */
+        section {
+            background-color: #e6f7ff;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.5s ease-in-out;
         }
 
         section:nth-child(even) {
-            background-color: #f9f9e1; /* Light Yellow */
-        }
-
-        .section-content {
-            max-width: 800px;
+            background-color: #f9f9e1;
         }
 
         .section-content h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
         }
 
         .section-content p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 20px;
         }
 
@@ -118,7 +119,7 @@
             color: white;
             text-decoration: none;
             border-radius: 5px;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .btn:hover {
@@ -149,11 +150,75 @@
             margin: 0;
         }
 
+        /* Add scroll-margin-top */
+        section {
+            scroll-margin-top: 100px; /* Adjust this value for larger screens */
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            .sections-container {
+                padding: 10px;
+            }
+
+            section {
+                width: 100%; /* Take full width on small screens */
+            }
+
+            .section-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .section-content p {
+                font-size: 1rem;
+            }
+
+            .btn {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+
+            /* Adjust scroll margin for mobile */
+            section {
+                scroll-margin-top: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.4rem;
+            }
+
+            .section-content h2 {
+                font-size: 1.4rem;
+            }
+
+            .section-content p {
+                font-size: 0.9rem;
+            }
+
+            /* Reduce navigation button size and keep them side by side */
             nav ul {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: 5px;
+            }
+
+            nav ul li a {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+
+            /* Further adjust scroll margin for very small screens */
+            section {
+                scroll-margin-top: 70px;
             }
         }
     </style>
@@ -169,6 +234,7 @@
     <!-- Navigation -->
     <nav>
         <ul>
+            
             <li><a href="#attendance">Check Attendance</a></li>
             <li><a href="#materials">Download Materials</a></li>
             <li><a href="#questionbank">Question Banks</a></li>
@@ -176,38 +242,41 @@
         </ul>
     </nav>
 
-    <!-- Full-Screen Sections with Different Backgrounds -->
-    <section id="attendance">
-        <div class="section-content">
-            <h2>Check Attendance</h2>
-            <p>Enter your roll number to check attendance records for Data Science 2nd Year.</p>
-            <a href="Attendance.html" class="btn">Check Now</a>
-        </div>
-    </section>
+    <!-- Sections Container -->
+    <div class="sections-container">
+       
+        <section id="attendance">
+            <div class="section-content">
+                <h2>Check Attendance</h2>
+                <p>Enter your roll number to check attendance records for Data Science 2nd Year.</p>
+                <a href="Attendance.html" class="btn">Check Now</a>
+            </div>
+        </section>
 
-    <section id="materials">
-        <div class="section-content">
-            <h2>Download Materials</h2>
-            <p>Access the latest class materials and notes for Data Science 2nd Year.</p>
-            <a href="materials.html" class="btn">Download</a>
-        </div>
-    </section>
+        <section id="materials">
+            <div class="section-content">
+                <h2>Download Materials</h2>
+                <p>Access the latest class materials and notes for Data Science 2nd Year.</p>
+                <a href="materials.html" class="btn">Download</a>
+            </div>
+        </section>
 
-    <section id="questionbank">
-        <div class="section-content">
-            <h2>Question Banks</h2>
-            <p>Get the previous year's question papers for the Data Science department.</p>
-            <a href="banks.html" class="btn">Download</a>
-        </div>
-    </section>
+        <section id="questionbank">
+            <div class="section-content">
+                <h2>Question Banks</h2>
+                <p>Get the question Banks for the Data Science department.</p>
+                <a href="banks.html" class="btn">Download</a>
+            </div>
+        </section>
 
-    <section id="announcements">
-        <div class="section-content">
-            <h2>Announcements</h2>
-            <p>Stay updated with important announcements for Data Science 2nd Year students.</p>
-            <a href="anno.html" class="btn">View Updates</a>
-        </div>
-    </section>
+        <section id="announcements">
+            <div class="section-content">
+                <h2>Announcements</h2>
+                <p>Stay updated with important announcements for Data Science 2nd Year students.</p>
+                <a href="anno.html" class="btn">View Updates</a>
+            </div>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer>
