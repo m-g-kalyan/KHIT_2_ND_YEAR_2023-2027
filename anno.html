@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements - Data Science 2nd Year</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .announcement {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .announcement h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .announcement p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .date {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #ecf0f1;
+            padding: 15px;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Announcements</h1>
+        <p>Data Science 2nd Year - KHIT</p>
+    </header>
+
+    <div class="container">
+        <div class="announcement">
+            <div class="date">September 12, 2024</div>
+            <h2>Event: SAMKALP</h2>
+            <p>We are excited to announce that the event SAMKALP will be held on September 27th and 28th, 2024. Stay tuned for more details about the event schedule and activities.</p>
+        </div>
+        <div class="announcement">
+            <div class="date">September 11, 2024</div>
+            <h2>Two Teams Qualified for Smart India Hackathon!</h2>
+            <p>We are thrilled to announce that two teams from our Data Science class have qualified for the Smart India Hackathon! Congratulations to the teams and best of luck in the competition.</p>
+        </div>
+
+       
+
+        <!-- Add other announcements as needed -->
+    </div>
+
+    <footer>
+        <p>Powered by KHIT Data Science Department Students</p>
+    </footer>
+
+    <script>
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('Congratulations!', {
+                body: 'Two teams from our class have qualified for Smart India Hackathon. Check out the announcements page for more details.',
+                icon: 'icon.png'
+            });
+        }
+    </script>
+
+</body>
+</html>

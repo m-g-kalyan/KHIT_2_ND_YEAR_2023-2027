@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result Page</title>
+    <link rel="stylesheet" href="mainres.css">
+</head>
+<body>
+    <section>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </section>
+
+    <div class="result-container">
+        <div class="check-results">
+            <h2>Check Your Results</h2>
+            <form id="resultForm">
+                <div class="input-group">
+                    <label for="rollNumber">Roll Number:</label>
+                    <input type="text" id="rollNumber" name="rollNumber" required>
+                </div>
+                <div class="input-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                <input type="submit" value="Check Results">
+            </form>
+        </div>
+
+        <div id="resultDetails" class="result-details" style="display: none;">
+            <div class="student-header">
+                <div class="student-picture">
+                    <img id="studentPic" src="" alt="Student Picture">
+                </div>
+                <div class="student-details">
+                    <p><strong>Name:</strong> <span id="studentName"></span></p>
+                    <p><strong>Roll Number:</strong> <span id="studentRollNumber"></span></p>
+                    <p><strong>Course:</strong> <span id="studentCourse"></span></p>
+                    <p><strong>Year:</strong> <span id="studentYear"></span></p>
+                </div>
+            </div>
+
+            <div class="results">
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Total Points</th>
+                            <th>Points Obtained</th>
+                            <th>Credits</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultTableBody">
+                        <!-- Results will be populated here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="overall-performance">
+                <p><strong>Total Credits:</strong> <span id="totalCredits">0</span></p>
+                <p><strong>SGPA:</strong> <span id="sgpa">N/A</span></p> <!-- Add this line -->
+                <p><strong>Status:</strong> <span id="status">N/A</span></p>
+            </div>
+            
+
+
+    <script>
+        const studentDataUrl = 'students.csv'; // Replace with actual path
+        const resultsDataUrl = 'totalpoints.csv'; // Replace with actual path
+        const creditsDataUrl = 'credits1.csv'; // Replace with actual path
+        
+        let students = [];
+        let results = [];
+        let credits = {};
+        
+        // Function to fetch and parse CSV data
+        function fetchCSV(url, callback) {
+            fetch(url)
+                .then(response => response.text())
+                .then(text => {
+                    const rows = text.trim().split('\n').map(row => row.split(','));
+                    callback(rows);
+                })
+                .catch(error => console.error('Error fetching CSV:', error));
+        }
+        
+        // Load student data
+        function loadStudents() {
+            fetchCSV(studentDataUrl, (data) => {
+                const headers = data[0];
+                students = data.slice(1).map(row => {
+                    const student = {};
+                    headers.forEach((header, i) => student[header.trim()] = row[i].trim());
+                    return student;
+                });
+                console.log("Student data loaded:", students);
+            });
+        }
+        
+        // Load results data
+        function loadResults() {
+            fetchCSV(resultsDataUrl, (data) => {
+                const headers = data[0];
+                results = data.slice(1).map(row => {
+                    const result = {};
+                    headers.forEach((header, i) => result[header.trim()] = row[i].trim());
+                    return result;
+                });
+                console.log("Results data loaded:", results);
+            });
+        }
+        
+        // Load credits data
+        function loadCredits() {
+            fetchCSV(creditsDataUrl, (data) => {
+                credits = data.slice(1).reduce((acc, [subject, credit]) => {
+                    acc[subject.trim()] = parseFloat(credit) || 0;
+                    return acc;
+                }, {});
+                console.log("Credits data loaded:", credits);
+            });
+        }
+        
+        // Format Date function
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+        }
+        
+        // Handle form submission to check results
+        document.getElementById('resultForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+        
+            const rollNumber = document.getElementById('rollNumber').value.trim();
+            const dob = formatDate(document.getElementById('dob').value);
+        
+            // Reset results display
+            document.getElementById('resultDetails').style.display = 'none';
+            document.getElementById('resultTableBody').innerHTML = '';
+            document.getElementById('totalCredits').textContent = '0';
+            document.getElementById('status').textContent = 'N/A';
+            document.getElementById('studentPic').src = '';
+            document.getElementById('sgpa').textContent = 'N/A'; // Add this line to reset SGPA
+        
+            if (!rollNumber || !dob) {
+                alert('Please enter both roll number and date of birth.');
+                return;
+            }
+        
+            const student = students.find(s => s['Roll Number'] === rollNumber && formatDate(s['DOB']) === dob);
+            const studentResults = results.find(r => r['Roll number'] === rollNumber);
+        
+            if (student && studentResults) {
+                document.getElementById('studentPic').src = student['Picture'] || '';
+                document.getElementById('studentName').textContent = student['Name'] || 'Unknown';
+                document.getElementById('studentRollNumber').textContent = student['Roll Number'] || 'Unknown';
+                document.getElementById('studentCourse').textContent = student['Course'] || 'Unknown';
+                document.getElementById('studentYear').textContent = student['Year'] || 'Unknown';
+        
+                let totalCreditsEarned = 0;
+                let totalMaxCredits = 0;
+                let allPass = true;
+        
+                const subjects = ['M1', 'Introduction to programming', 'Chemistry', 'Communicative English', 'Engineering graphics', 'IP Lab', 'IT workshop', 'CE Lab', 'Chemistry lab', 'HWYS'];
+                subjects.forEach(subject => {
+                    const pointsObtained = parseInt(studentResults[subject], 10) || 0;
+                    const totalPointsAvailable = 10; // Assuming max points is 10 for simplicity
+                    const creditValue = credits[subject] || 0;
+                    console.log(`Subject: ${subject}, Points Obtained: ${pointsObtained}, Credit Value: ${creditValue}`); // Debug log
+                    const creditsEarned = pointsObtained >= 3 ? creditValue : 0; // Full credits if points >= 3, else zero
+                    const status = creditsEarned > 0 ? 'Pass' : 'Fail';
+                    const statusClass = creditsEarned > 0 ? 'pass' : 'fail';
+        
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${subject}</td>
+                        <td>${totalPointsAvailable}</td>
+                        <td>${pointsObtained}</td>
+                        <td>${creditValue.toFixed(1)}</td> <!-- Show credit values as decimals -->
+                        <td class="${statusClass}">${status}</td>
+                    `;
+                    document.getElementById('resultTableBody').appendChild(row);
+        
+                    totalCreditsEarned += creditsEarned;
+                    totalMaxCredits += creditValue;
+                    if (creditsEarned === 0) {
+                        allPass = false;
+                    }
+                });
+        
+                // Show total credits earned
+                document.getElementById('totalCredits').textContent = totalCreditsEarned.toFixed(1);
+        
+                // Show SGPA
+                const sgpa = studentResults[Object.keys(studentResults).pop()]; // Last column in results.csv
+                document.getElementById('sgpa').textContent = sgpa || 'N/A';
+        
+                // Show pass/fail status
+                document.getElementById('status').textContent = allPass ? 'Pass' : 'Fail';
+        
+                // Show result details
+                document.getElementById('resultDetails').style.display = 'block';
+            } else {
+                alert('No results found for the provided roll number and date of birth.');
+            }
+        });
+        
+        // Load all data on page load
+        window.onload = function() {
+            loadStudents();
+            loadResults();
+            loadCredits();
+        };
+        
+        
+    </script>
+</body>
+</html>

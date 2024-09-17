@@ -1,0 +1,67 @@
+/* General styling for the body and container */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+header {
+    text-align: center;
+}
+
+header h1 {
+    color: #333;
+}
+
+/* Semester section styling */
+#semesters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between semester divs */
+}
+
+.semester {
+    background-color: #e0f7fa;
+    border: 1px solid #b2ebf2;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.semester:hover {
+    background-color: #b2ebf2;
+    transform: scale(1.02);
+}
+
+.semester h2 {
+    margin-top: 0;
+    color: #00796b;
+}
+
+.semester p {
+    font-weight: bold;
+}
+
+/* Additional styling for responsive design */
+@media (max-width: 768px) {
+    #semesters {
+        flex-direction: column;
+    }
+
+    .semester {
+        margin: 10px 0;
+    }
+}

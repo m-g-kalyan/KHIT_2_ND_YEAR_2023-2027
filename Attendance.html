@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Attendance - Data Science 2nd Year</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #35424a;
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            font-size: 1rem;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .input-container input {
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .input-container button {
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
+            background-color: #35424a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .input-container button:hover {
+            background-color: #555;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .result-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .result-container th, .result-container td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .result-container th {
+            background-color: #35424a;
+            color: white;
+        }
+
+        .error {
+            color: red;
+            font-size: 1rem;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .input-container input, 
+            .input-container button {
+                font-size: 0.9rem;
+            }
+            
+            .result-container th, 
+            .result-container td {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Check Your Attendance</h1>
+        <p>Data Science 2nd Year - KHIT</p>
+    </header>
+
+    <div class="container">
+        <div class="input-container">
+            <input type="text" id="rollNumber" placeholder="Enter your roll number">
+            <button onclick="checkAttendance()">Check Attendance</button>
+        </div>
+        
+        <div class="result-container" id="resultContainer">
+            <!-- Attendance results will be displayed here -->
+        </div>
+        
+        <div class="error" id="error"></div>
+    </div>
+
+    <script>
+        async function checkAttendance() {
+            const rollNumber = document.getElementById('rollNumber').value.trim();
+            const resultContainer = document.getElementById('resultContainer');
+            const error = document.getElementById('error');
+            
+            // Clear previous results and error message
+            resultContainer.innerHTML = '';
+            error.innerHTML = '';
+
+            if (rollNumber === '') {
+                error.innerHTML = 'Please enter a roll number.';
+                return;
+            }
+
+            try {
+                // Fetch the CSV file (replace with your GitHub CSV URL)
+                const response = await fetch('asserts/Attendance.csv');
+                const data = await response.text();
+                
+                // Parse CSV data
+                const rows = data.split('\n').map(row => row.split(','));
+
+                // Search for the roll number in the CSV
+                const studentData = rows.find(row => row[0] === rollNumber);
+
+                if (studentData) {
+                    // Display attendance percentage
+                    let html = ` 
+                        <table>
+                            <tr><th>Roll Number</th><th>Attendance Percentage</th></tr>
+                            <tr><td>${studentData[0]}</td><td>${studentData[1]}%</td></tr>
+                        </table>`;
+                    resultContainer.innerHTML = html;
+                } else {
+                    error.innerHTML = 'Roll number not found.';
+                }
+            } catch (e) {
+                console.error(e);
+                error.innerHTML = 'Error fetching attendance data. Please try again later.';
+            }
+        }
+    </script>
+</body>
+</html>
