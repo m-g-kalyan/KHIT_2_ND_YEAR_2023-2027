@@ -1,0 +1,135 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(to right, #ffafbd, #ffc3a0);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.events {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between event sections */
+}
+
+.event-section {
+    background-color: rgba(255, 255, 255, 0.8); /* White with transparency for text readability */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    position: relative;
+    margin-bottom: 15px; /* Add margin for spacing between sections */
+    background-image: url('sample-bg.jpg'); /* Replace with your background image */
+    background-size: cover; /* Cover the entire section */
+    background-position: center; /* Center the background image */
+}
+
+.event-section:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 204, 203, 0.8); /* Slightly change color on hover */
+}
+
+.gallery {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #45a049;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.image-item {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.image-item:hover {
+    transform: scale(1.05);
+}
+
+.image-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 4px solid #ff6f61; /* Colorful bottom border */
+}
+
+.image-item p {
+    padding: 10px;
+    margin: 0;
+    text-align: center; /* Center the caption */
+    font-size: 14px;
+    color: #555;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .event-section {
+        padding: 15px;
+    }
+
+    .back-button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .image-item p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .event-section {
+        padding: 10px;
+    }
+
+    .back-button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .image-grid {
+        grid-template-columns: 1fr; /* Single column layout for small screens */
+    }
+
+    .image-item p {
+        font-size: 10px;
+    }
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Gallery</title>
+    <link rel="stylesheet" href="event.css">
+    <style>
+        /* Add modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .modal-caption {
+            margin: 15px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .close {
+            color: #fff;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Event Gallery</h1>
+</header>
+
+<section class="events" id="events">
+    <div class="event-section" onclick="loadGallery('SAMKALP', 'SEPTEMBER 27-28, 2024', 'KHIT', eventImages1)">
+        <h2>SAMKALP</h2>
+        <p>Date: SEPTEMBER 27-28, 2024</p>
+        <p>Location: KHIT</p>
+    </div>
+    <div class="event-section" onclick="loadGallery('Codethon', 'September 24-25, 2024', 'KHIT', eventImages2)">
+        <h2>Codethon</h2>
+        <p>Date: September 24-25, 2024</p>
+        <p>Location: KHIT</p>
+    </div>
+</section>
+
+<section class="gallery" id="gallery" style="display: none;">
+    <button class="back-button" onclick="backToEvents()">Back to Events</button>
+    <div id="gallery-content">
+        <!-- Content will be dynamically generated here -->
+    </div>
+</section>
+
+<!-- Modal for Fullscreen Image -->
+<div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="modalCaption" class="modal-caption"></div>
+</div>
+
+<script>
+    // Sample image data for each event
+    const eventImages1 = [
+        { src: "eventimg/postersamkalp2k24.jpg", caption: "Poster" },
+        // Add more images as needed
+    ];
+
+    const eventImages2 = [
+        { src: "eventimg/postercodethon.jpg", caption: "Poster" },
+        // Add more images as needed
+    ];
+
+    function loadGallery(title, date, location, images) {
+        const eventsSection = document.getElementById("events");
+        const gallerySection = document.getElementById("gallery");
+        const galleryContent = document.getElementById("gallery-content");
+
+        galleryContent.innerHTML = `
+            <h2>${title}</h2>
+            <p>Date: ${date}</p>
+            <p>Location: ${location}</p>
+            <div class="image-grid">
+                ${images.map(image => `
+                    <div class="image-item">
+                        <img src="${image.src}" alt="${image.caption}" 
+                             onclick="openModal('${image.src}', '${image.caption}')" 
+                             oncontextmenu="return false;"
+                             onlongpress="showDownloadAlert('${image.src}')">
+                        <p>${image.caption}</p>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        eventsSection.style.display = "none";
+        gallerySection.style.display = "block";
+    }
+
+    function openModal(src, caption) {
+        const modal = document.getElementById("myModal");
+        const modalImage = document.getElementById("modalImage");
+        const modalCaption = document.getElementById("modalCaption");
+
+        modal.style.display = "block";
+        modalImage.src = src;
+        modalCaption.innerHTML = caption;
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+    function backToEvents() {
+        const eventsSection = document.getElementById("events");
+        const gallerySection = document.getElementById("gallery");
+
+        eventsSection.style.display = "block";
+        gallerySection.style.display = "none";
+    }
+
+    function showDownloadAlert(imageSrc) {
+        alert("Press 'Download' to save the image or use the right-click menu on larger screens.");
+        // This alerts users about how to download the image
+    }
+
+    // Adding event listener for long press (for mobile)
+    let longPressTimer;
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault(); // Prevent context menu from showing
+    });
+    
+    document.addEventListener('touchstart', function(event) {
+        longPressTimer = setTimeout(() => {
+            const target = event.target.closest('img');
+            if (target) {
+                showDownloadAlert(target.src);
+            }
+        }, 500); // 500ms for long press
+    });
+
+    document.addEventListener('touchend', function() {
+        clearTimeout(longPressTimer);
+    });
+
+</script>
+
+</body>
+</html>
